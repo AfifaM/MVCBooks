@@ -1,0 +1,82 @@
+﻿@model IEnumerable<MvcBooks.Models.Book>
+
+@{
+    ViewBag.Title = "Favourite Books";
+}
+
+<div class="container heading-container">
+    <div class="heading">Favourite Books Collection</div>
+</div>
+
+<hr />
+
+
+<div class="col-sm-6">
+    @using (Html.BeginForm("Index", "Books", FormMethod.Get))
+    {
+        <p>
+            Genre: @Html.DropDownList("bookGenre", "All")
+            Title: @Html.TextBox("SearchString")
+            <input type="submit" value="Search" class="btn btn-default" />
+        </p>
+    }
+</div>
+
+<div class="col-sm-6">
+    <p align="right">
+        @Html.ActionLink("Add New Book", "Create", null, new { @class = "btn btn-default" })
+    </p>
+</div>
+
+<br />
+
+<table class="table">
+    <tr class="table-header">
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.Picture)
+        </th>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.ReleaseDate)
+        </th>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.Genre)
+        </th>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th class="text-center">
+            Actions
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td class="text-center">
+            <img src="@Url.Content(item.Picture)" height="100" />
+        </td>
+        <td class="text-center">
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td class="text-center">
+            @Html.DisplayFor(modelItem => item.ReleaseDate)
+        </td>
+        <td class="text-center">
+            @Html.DisplayFor(modelItem => item.Genre)
+        </td>
+        <td class="text-center">
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td class="text-center">
+            <ul class="list-inline">
+                @Html.ActionLink("Details", "Details", new { item.ID }, new { @class = "btn btn-default" })
+                @Html.ActionLink("Edit", "Edit", new { item.ID }, new { @class = "btn btn-default" })
+                @Html.ActionLink("Delete", "Delete", new { item.ID }, new { @class = "btn btn-default" })
+            </ul>
+        </td>
+    </tr>
+}
+
+</table>
